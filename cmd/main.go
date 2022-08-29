@@ -7,13 +7,23 @@ import (
 )
 
 func main() {
-	ip := net.ParseIP(os.Args[1])
+	mode := os.Args[1]
+
+	ip := net.ParseIP(os.Args[2])
 	ipnet := net.IPNet{
 		IP: ip,
 	}
 
-	err := arp.SetARP(os.Args[2], ipnet)
-	if err != nil {
-		panic(err)
+	if mode == "add" {
+		err := arp.SetARP(os.Args[3], ipnet)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		err := arp.DeleteARP(os.Args[3], ipnet)
+		if err != nil {
+			panic(err)
+		}
 	}
+
 }
